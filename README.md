@@ -1,2 +1,2 @@
 # Feather-DB-System
-This is lightweight database management system. 
+This is lightweight relational database management system. 
