@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include<fstream>
 
 template <typename T>
 struct BTreeNode{
@@ -14,8 +15,12 @@ template <typename T>
 class BTree{
     private:
 	BTreeNode<T>* root;
+	std::fstream file;
+
     public:
-	BTree() : root(nullptr) {}
+	BTree() : root(nullptr) {
+	    file.open(filename, std::ios::in | std::ios::out | std::ios:binary | std::ios::trunc);
+	}
 
 	void insert(const T& key){
 	    if (root==nullptr){
@@ -40,6 +45,21 @@ class BTree{
 	    inOrderTraversal(root);
 	    std::cout << std::endl;
 	}
+
+	void saveToFile(){
+	    file.seekp(0);
+	    writeToFile(root);
+	}
+
+	void loadFromFile(){
+	    file.seekg(0);
+	    root = readFromFile();
+	}
+	
+	~BTree(){
+	    file.close();
+	}
+
     private:
 	bool searchKey(BTreeNode<T>* node, const T& key) const{
 	    if (node==nullptr){
@@ -117,6 +137,27 @@ class BTree{
 	    }
 
 	    parentNode->children.insert(parentNode->children.begin() + childIndex + 1, newChild);
+	}
+
+	void writeToFile(BTreeNode<T>* node){
+	    if (node!=nullptr){
+		file.write(reinterpret_cast<char*>(node), sizeof(BTreeNode<T>));
+
+		for (size_t i=0; i<node->children.size(); ++i){
+		    writeToFile(node->children[i]);
+		}
+	    }
+	}
+
+	BTreeNode<T>* readFromFile(){
+	    BTreeNode<T>* node = new BTreeNode<T>();
+	    file.read(reinterpret_cast<char*>(node), sizeof(BTreeNode<T>));
+
+	    for (size_t i=0; i<node->children.size(); ++i){
+		node->children[i]=readFromFile();
+	    }
+
+	    return node;
 	}
 };
 
