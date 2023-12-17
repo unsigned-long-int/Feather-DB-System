@@ -4,12 +4,12 @@
 
 template <typename T>
 
-class BTreeStorageHandler{
+class BTreePersistenceHandler{
     private:
 	BTreeNode<T>* root;
 	std::fstream file;
     public:
-	StorageHandler(BTreeNode<T>* rootNode, const std::string& filename="default_btree.dat") : root(rootNode){
+	BTreePersistenceHandler(BTreeNode<T>* rootNode, const std::string& filename="default_btree.dat") : root(rootNode){
 	    if (!root){
 		throw std::invalid_argument("Error: root cannot be nullptr");
 	    }
@@ -30,7 +30,7 @@ class BTreeStorageHandler{
 	    root=readFromFile();
 	}
 
-	~BTreeStorageHandler(){
+	~BTreePersistenceHandler(){
 	    file.close();
 	}
 
@@ -55,4 +55,8 @@ class BTreeStorageHandler{
 
 	    return node;
 	}
+};
+
+
+class DatStorageOptimiser(){
 };
