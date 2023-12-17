@@ -18,7 +18,7 @@ class BTree{
 	std::fstream file;
 
     public:
-	BTree() : root(nullptr) {
+	BTree(const std::string& filename="default_btree.dat") : root(nullptr) {
 	    file.open(filename, std::ios::in | std::ios::out | std::ios:binary | std::ios::trunc);
 	}
 
