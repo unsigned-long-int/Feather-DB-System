@@ -58,5 +58,3 @@ class BTreePersistenceHandler{
 };
 
 
-class DatStorageOptimiser(){
-};
