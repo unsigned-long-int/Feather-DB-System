@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstring>
 
 int main(int argc, char* argv[]){
 
@@ -11,18 +12,20 @@ int main(int argc, char* argv[]){
 
 	if(!(std::cin >> sqlCommand)){
 	    std::cout << "Error reading input. \n";
-	    return EXIT_FAILURE;
+	    std::cin.clear();
+	    std::cin.ignore();
+	    continue;
 	}
 
-	switch(sqlCommand){
-	    case ".exit": {
-			      std::cout << "The request has been terminated.\n";
-			      return EXIT_SUCCESS
+	SQLParser sql_parser(sqlCommand);
 
-			  }
-	    default: {
-			 std::cout << "unrecognised command " sqlCommand ". \n";
-		     }
+	bool validitySQLCommand = sql_parser.isValidSQLCommand();
+
+	if (!validitySQLCommand){
+	    std::cout "Unrecognised command. \n";
+	    std::cin.clear();
+	    std::cin.ignore();
+	    continue;
 	}
     }
     return EXIT_SUCCESS;
