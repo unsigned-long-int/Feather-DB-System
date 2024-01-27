@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include "../include/controller/sql_parser/sql-parser.h"
 
 int main(int argc, char* argv[]){
 
@@ -27,6 +28,8 @@ int main(int argc, char* argv[]){
 	    std::cin.ignore();
 	    continue;
 	}
+
+	if (sql_parser)
     }
     return EXIT_SUCCESS;
 }
