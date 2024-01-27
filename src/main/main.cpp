@@ -29,7 +29,7 @@ int main(int argc, char* argv[]){
 	    continue;
 	}
 
-	if (sql_parser)
+	std::unique_ptr<CommandsHandler> sql_command_instance = sql_parser.fetchSQLHandlerInstance();
     }
     return EXIT_SUCCESS;
 }
