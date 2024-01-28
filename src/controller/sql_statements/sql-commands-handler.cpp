@@ -1,48 +1,32 @@
 
 class CommandsHandler {
     public:
+	CommandsHandler(std::string sql) : sql_command(sql){}
+
 	virtual void execute() = 0;
-	bool validate_args() = 0;
 	virtual~CommandsHandler() = default;
 
-	void inititalise() {
+	void initialise() {
 	    execute();
 	}
+
+    protected:
+	std::string sql_command;
 };
 
 class SelectCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing select command...\n";
-	}
-
-	void validate_args() override {
-	    	    std::cout << "Provide your SELECT command \n";
-
-	    bool selectArgsActive = true;
-	    while(selectArgsActive){
-		std::cout << "------ SELECT STATEMENT ------\n";
-		std::cout << "provide your SELECT statement...\m";
-
-		std::string selectStatement;
-		if(!(std::cin >> selectStatement)) {
-		    std::cout << "Error reading input. \m";
-		    std::cin.clear();
-		    std::cin.ignore();
-		    continue;
-		}
-
-
-	    }
-	}	    
-
-    private:
-	std::string fetch_args(){
 	}
 };
 
 class DeleteCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing delete command...\n";
 	}
@@ -50,6 +34,8 @@ class DeleteCommand : public CommandsHandler {
 
 class CreateCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing create command...\n";
 	}
@@ -57,6 +43,8 @@ class CreateCommand : public CommandsHandler {
 
 class InsertCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing insert command...\n";
 	}
@@ -64,6 +52,8 @@ class InsertCommand : public CommandsHandler {
 
 class UpdateCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing update command...\n";
 	}
@@ -71,6 +61,8 @@ class UpdateCommand : public CommandsHandler {
 
 class ExitCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing exit command...\n";
 	}
@@ -78,6 +70,8 @@ class ExitCommand : public CommandsHandler {
 
 class InvalidCommand : public CommandsHandler {
     public:
+	using CommandsHandler::CommandsHandler;
+
 	void execute() override {
 	    std::cout << "Executing invalid command...\n";
 	}

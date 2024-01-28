@@ -2,34 +2,37 @@
 #include <string>
 #include <cstring>
 #include "../include/controller/sql_parser/sql-parser.h"
+#include "../include/utils/utils.h"
 
 int main(int argc, char* argv[]){
 
-    bool applicationRunning = true;
-    while (applicationRunning){
+    bool application_running = true;
+    while (application_running){
 	std::cout << "db > \n";
 
-	std::string sqlCommand;
+	std::string sql_command;
 
-	if(!(std::cin >> sqlCommand)){
+	if(!(std::cin >> sql_command)){
 	    std::cout << "Error reading input. \n";
 	    std::cin.clear();
 	    std::cin.ignore();
 	    continue;
 	}
 
-	SQLParser sql_parser(sqlCommand);
+	toLower(sql_command);
 
-	bool validitySQLCommand = sql_parser.isValidSQLCommand();
+	SQLParser sql_parser(sql_command);
 
-	if (!validitySQLCommand){
+	bool validity_sql_command = sql_parser.isValidSQLCommand();
+
+	if (!validity_sql_command){
 	    std::cout "Unrecognised command. \n";
 	    std::cin.clear();
 	    std::cin.ignore();
 	    continue;
 	}
 
-	std::unique_ptr<CommandsHandler> sql_command_instance = sql_parser.fetchSQLHandlerInstance();
+	std::unique_ptr<CommandsHandler> sql_command_instance = sql_parser.fetchSQLHandlerInstance(sql_command);
     }
     return EXIT_SUCCESS;
 }
