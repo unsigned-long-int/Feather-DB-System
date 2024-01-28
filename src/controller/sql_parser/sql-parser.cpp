@@ -3,6 +3,7 @@
 #include<string>
 #include<memory>
 #include<unordered_map>
+#include<sstream>
 #include "../include/sql_statements/sql-commands-handler.h"
 
 enum class StatementType {
@@ -18,7 +19,8 @@ enum class StatementType {
 class SQLParser {
 public:
     SQLParser(const std::string& sql) : sql(sql) {
-        fetched_command = fetchSQLCommand(sql);
+	command_type = extractCommandType(sql);
+        fetched_command = fetchSQLCommand(command_type);
     }
 
     bool isValidSQLCommand(){
@@ -34,8 +36,9 @@ public:
     }
 
 private:
-
+    // private attributes
     std::string sql;
+    std::string command_type;
     StatementType fetched_command;
 
     std::unordered_map<StatementType, std::unique_ptr<CommandsHandler>> commandMap = {
@@ -66,6 +69,16 @@ private:
 	} else {
             return StatementType::INVALID_COMMAND;
         }
+    }
+
+    std::string extractCommandType(const std::string& sql) const {
+	std::string command_type;
+	std::istringstream iss(sql);
+	if (iss >> command_type) {
+	    return command_type;
+	} else {
+	    return "";
+	}
     }
 };
 
