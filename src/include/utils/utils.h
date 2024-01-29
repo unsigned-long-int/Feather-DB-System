@@ -11,3 +11,5 @@ inline void toLower(char* str){
 	str++;
     }
 }
+
+#endif //UTILS_H
